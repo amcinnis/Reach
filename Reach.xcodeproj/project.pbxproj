@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D5657D481EC2479A00B4160E /* CreateEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D471EC2479A00B4160E /* CreateEventTableViewController.swift */; };
+		D5657D4A1EC281EB00B4160E /* DateTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D491EC281EB00B4160E /* DateTimeViewController.swift */; };
+		D5657D4C1EC2886400B4160E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D4B1EC2886400B4160E /* FeedViewController.swift */; };
+		D5657D4E1EC2898900B4160E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D4D1EC2898900B4160E /* SwiftyJSON.swift */; };
+		D5657D501EC2BB3400B4160E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D4F1EC2BB3400B4160E /* Event.swift */; };
+		D5657D521EC2BC2000B4160E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D511EC2BC1F00B4160E /* User.swift */; };
 		D58964FE1EBC053F0023BE27 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58964FD1EBC053F0023BE27 /* MapKit.framework */; };
 		D58965001EBC12C00023BE27 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58964FF1EBC12C00023BE27 /* FilterViewController.swift */; };
 		D5A85E501EB96CAB003ACE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A85E4F1EB96CAB003ACE7C /* AppDelegate.swift */; };
@@ -19,6 +24,11 @@
 
 /* Begin PBXFileReference section */
 		D5657D471EC2479A00B4160E /* CreateEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventTableViewController.swift; sourceTree = "<group>"; };
+		D5657D491EC281EB00B4160E /* DateTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimeViewController.swift; sourceTree = "<group>"; };
+		D5657D4B1EC2886400B4160E /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		D5657D4D1EC2898900B4160E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		D5657D4F1EC2BB3400B4160E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		D5657D511EC2BC1F00B4160E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D58964FD1EBC053F0023BE27 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D58964FF1EBC12C00023BE27 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		D5A85E4C1EB96CAB003ACE7C /* Reach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reach.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,8 +83,13 @@
 				D5A85E4F1EB96CAB003ACE7C /* AppDelegate.swift */,
 				D5A85E531EB96CAB003ACE7C /* Main.storyboard */,
 				D5657D471EC2479A00B4160E /* CreateEventTableViewController.swift */,
+				D5657D491EC281EB00B4160E /* DateTimeViewController.swift */,
+				D5657D4F1EC2BB3400B4160E /* Event.swift */,
+				D5657D4B1EC2886400B4160E /* FeedViewController.swift */,
 				D58964FF1EBC12C00023BE27 /* FilterViewController.swift */,
 				D5AF516A1EBC02C800B11D54 /* MapViewController.swift */,
+				D5657D4D1EC2898900B4160E /* SwiftyJSON.swift */,
+				D5657D511EC2BC1F00B4160E /* User.swift */,
 				D5A85E561EB96CAB003ACE7C /* Assets.xcassets */,
 				D5A85E581EB96CAB003ACE7C /* LaunchScreen.storyboard */,
 				D5A85E5B1EB96CAB003ACE7C /* Info.plist */,
@@ -160,9 +175,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5657D501EC2BB3400B4160E /* Event.swift in Sources */,
 				D5657D481EC2479A00B4160E /* CreateEventTableViewController.swift in Sources */,
 				D58965001EBC12C00023BE27 /* FilterViewController.swift in Sources */,
 				D5A85E501EB96CAB003ACE7C /* AppDelegate.swift in Sources */,
+				D5657D4A1EC281EB00B4160E /* DateTimeViewController.swift in Sources */,
+				D5657D521EC2BC2000B4160E /* User.swift in Sources */,
+				D5657D4C1EC2886400B4160E /* FeedViewController.swift in Sources */,
+				D5657D4E1EC2898900B4160E /* SwiftyJSON.swift in Sources */,
 				D5AF516B1EBC02C800B11D54 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

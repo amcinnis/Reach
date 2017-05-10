@@ -8,8 +8,18 @@
 
 import UIKit
 
-class CreateEventTableViewController: UITableViewController {
+class DateCell: UITableViewCell {
+    
+    @IBOutlet var startLabel: UILabel!
+    @IBOutlet var endLabel: UILabel!
+}
 
+class CreateEventTableViewController: UITableViewController, UITextFieldDelegate, DateTimeDelegate {
+
+    @IBOutlet var titleField: UITextField!
+    @IBOutlet var descriptionView: UITextView!
+    private var event = Event()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,18 +28,66 @@ class CreateEventTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func createEvent(_ sender: Any) {
+        let alert = UIAlertController(title: "Create Event?", message: "Are you ready to create this event?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: {
+            [weak self] (action) in
+            guard let this = self else { return }
+            if this.titleField.isFirstResponder {
+                this.titleField.resignFirstResponder()
+            }
+            else if this.descriptionView.isFirstResponder {
+                this.descriptionView.resignFirstResponder()
+            }
+            
+            if let title = this.titleField.text {
+                this.event.name = title
+            }
+            
+            if let description = this.descriptionView.text {
+                this.event.description = description
+            }
+            
+            this.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 
+    // MARK: - Date Time Delegate
+    
+    func datesChosen(start: Date, end: Date) {
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .short
+        dateFormat.timeStyle = .short
+        
+        let cell = tableView(self.tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? DateCell
+        if let cell = cell {
+            cell.startLabel.text = "Start: \(dateFormat.string(from: start))"
+            cell.endLabel.text = "End: \(dateFormat.string(from: end))"
+        }
+        
+        event.start = start
+        event.end = end
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,37 +96,55 @@ class CreateEventTableViewController: UITableViewController {
             return 2
         }
         else if section == 1 {
-            return 2
+            return 1
+        }
+        else if section == 2 {
+            return 1
         }
         else {
             return 0
         }
     }
-
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultEventCell", for: indexPath)
-
-        // Configure the cell...
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                cell.textLabel?.text = "Title"
-            }
-            else if indexPath.row == 1 {
-                cell.textLabel?.text = "Location"
-            }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return ""
+        case 1:
+            return "Date & Time"
+        case 2:
+            return "Description"
+        default:
+            return ""
         }
-        else if indexPath.section == 1 {
-            if indexPath.row == 0 {
-                cell.textLabel?.text = "Start"
-            }
-            else if indexPath.row == 1 {
-                cell.textLabel?.text = "End"
-            }
-        }
-        return cell
     }
     
+    // MARK: - Text Field Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: = Scroll View Delegate
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        if scrollView != self.descriptionView && self.descriptionView.isFirstResponder {
+            self.descriptionView.resignFirstResponder()
+        }
+        
+        if self.titleField.isFirstResponder {
+            self.titleField.resignFirstResponder()
+        }
+    }
+    
+    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Configure the cell...
+     
+    }
+    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -105,14 +181,19 @@ class CreateEventTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "chooseDateTime" {
+            if let dest = segue.destination as? DateTimeViewController {
+                dest.delegate = self
+            }
+        }
     }
-    */
+ 
 
 }
