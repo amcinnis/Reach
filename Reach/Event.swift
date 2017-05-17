@@ -7,25 +7,49 @@
 //
 
 import Foundation
+import MapKit
 
-class Event {
+class Event: NSObject, MKAnnotation {
     var id: String?
     var name: String?
     var location: Location?
     var start: Date?
     var end: Date?
-    var description: String?
+    var desc: String?
     var price: Double?
     var coordinator: User?
+    var coordinate: CLLocationCoordinate2D
+    
+    init(coordinate: CLLocationCoordinate2D) {
+        self.coordinate = coordinate
+    }
+    
+    var title: String? {
+        if let name = name {
+            return name
+        }
+        return nil
+    }
+    
+    var subtitle: String? {
+        if let location = location {
+            return location.name
+        }
+        return nil
+    }
     
 }
 
 class Location {
     
+    var name: String
+    var place: String
     var latitude: Double
     var longitude: Double
     
-    init(latitude: Double, longitude: Double) {
+    init(name: String, place: String, latitude: Double, longitude: Double) {
+        self.name = name
+        self.place = place
         self.latitude = latitude
         self.longitude = longitude
     }

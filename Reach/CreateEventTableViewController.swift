@@ -6,6 +6,9 @@
 //  Copyright © 2017 Austin McInnis. All rights reserved.
 //
 
+import Firebase
+import FirebaseDatabase
+import MapKit
 import UIKit
 
 class DateCell: UITableViewCell {
@@ -14,11 +17,12 @@ class DateCell: UITableViewCell {
     @IBOutlet var endLabel: UILabel!
 }
 
-class CreateEventTableViewController: UITableViewController, UITextFieldDelegate, DateTimeDelegate {
+class CreateEventTableViewController: UITableViewController, UITextFieldDelegate, DateTimeDelegate, ReachLocationDelegate {
 
+    var locationManager: CLLocationManager?
     @IBOutlet var titleField: UITextField!
     @IBOutlet var descriptionView: UITextView!
-    private var event = Event()
+    private var event = Event(coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +58,17 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
             }
             
             if let description = this.descriptionView.text {
-                this.event.description = description
+                this.event.desc = description
+            }
+            
+            guard this.event.name != nil else { return }
+            
+            
+            //Firebase
+            let eventsRef = FIRDatabase.database().reference().child("events")
+            let eventRef = eventsRef.childByAutoId()
+            if let name = this.event.name, let start = this.event.start, let end = this.event.end, let description = this.event.desc, let location = this.event.location {
+                eventRef.setValue(["name": name, "start": start.timeIntervalSince1970, "end": end.timeIntervalSince1970, "description": description, "locationName": location.name, "latitude": location.latitude, "longitude": location.longitude, "place": location.place])
             }
             
             this.dismiss(animated: true, completion: nil)
@@ -64,6 +78,29 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Reach Location Delegate
+    
+    func locationSelected(placemark: MKPlacemark) {
+        let locationCell = tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
+        if let name = placemark.name {
+            locationCell.textLabel?.text = "Location: \(name)"
+            var place = ""
+            if let locality = placemark.locality {
+                place += locality
+            }
+            if let adminArea = placemark.administrativeArea {
+                if place.characters.count > 0 {
+                    place += ", \(adminArea)"
+                }
+                else {
+                    place += "\(adminArea)"
+                }
+            }
+            event.location = Location(name: name, place: place, latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude)
+            event.coordinate = placemark.coordinate
+        }
     }
 
     // MARK: - Date Time Delegate
@@ -109,7 +146,7 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return ""
+            return "Event"
         case 1:
             return "Date & Time"
         case 2:
@@ -191,6 +228,15 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
         if segue.identifier == "chooseDateTime" {
             if let dest = segue.destination as? DateTimeViewController {
                 dest.delegate = self
+            }
+        }
+        
+        if segue.identifier == "chooseLocation" {
+            if let dest = segue.destination as? EnterLocationViewController {
+                if let locationManager = locationManager {
+                    dest.locationManager = locationManager
+                    dest.delegate = self
+                }
             }
         }
     }
