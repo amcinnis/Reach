@@ -102,7 +102,6 @@ class EnterLocationViewController: UIViewController, CLLocationManagerDelegate {
 
 extension EnterLocationViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
-        print("here")
         if annotation is MKUserLocation {
             //return nil so map view draws "blue dot" for standard user location
             return nil

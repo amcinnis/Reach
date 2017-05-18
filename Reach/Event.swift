@@ -10,15 +10,15 @@ import Foundation
 import MapKit
 
 class Event: NSObject, MKAnnotation {
-    var id: String?
-    var name: String?
-    var location: Location?
-    var start: Date?
-    var end: Date?
-    var desc: String?
-    var price: Double?
+    var category: String?
     var coordinator: User?
     var coordinate: CLLocationCoordinate2D
+    var desc: String?
+    var end: Date?
+    var id: String?
+    var location: Location?
+    var name: String?
+    var start: Date?
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate

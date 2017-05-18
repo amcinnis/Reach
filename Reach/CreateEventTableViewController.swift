@@ -17,8 +17,9 @@ class DateCell: UITableViewCell {
     @IBOutlet var endLabel: UILabel!
 }
 
-class CreateEventTableViewController: UITableViewController, UITextFieldDelegate, DateTimeDelegate, ReachLocationDelegate {
+class CreateEventTableViewController: UITableViewController, UITextFieldDelegate, DateTimeDelegate, ReachLocationDelegate, ReachCategoryDelegate {
 
+    @IBOutlet var categoryLabel: UILabel!
     var locationManager: CLLocationManager?
     @IBOutlet var titleField: UITextField!
     @IBOutlet var descriptionView: UITextView!
@@ -67,8 +68,8 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
             //Firebase
             let eventsRef = FIRDatabase.database().reference().child("events")
             let eventRef = eventsRef.childByAutoId()
-            if let name = this.event.name, let start = this.event.start, let end = this.event.end, let description = this.event.desc, let location = this.event.location {
-                eventRef.setValue(["name": name, "start": start.timeIntervalSince1970, "end": end.timeIntervalSince1970, "description": description, "locationName": location.name, "latitude": location.latitude, "longitude": location.longitude, "place": location.place])
+            if let name = this.event.name, let start = this.event.start, let end = this.event.end, let description = this.event.desc, let location = this.event.location, let category = this.event.category {
+                eventRef.setValue(["name": name, "start": start.timeIntervalSince1970, "end": end.timeIntervalSince1970, "description": description, "locationName": location.name, "latitude": location.latitude, "longitude": location.longitude, "place": location.place, "category": category])
             }
             
             this.dismiss(animated: true, completion: nil)
@@ -85,7 +86,8 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
     func locationSelected(placemark: MKPlacemark) {
         let locationCell = tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         if let name = placemark.name {
-            locationCell.textLabel?.text = "Location: \(name)"
+            locationCell.textLabel?.text = name
+            locationCell.textLabel?.textColor = UIColor.black
             var place = ""
             if let locality = placemark.locality {
                 place += locality
@@ -101,6 +103,14 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
             event.location = Location(name: name, place: place, latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude)
             event.coordinate = placemark.coordinate
         }
+    }
+    
+    // MARK - Reach Category Delegate
+    
+    func categorySelected(category: String) {
+        event.category = category
+        categoryLabel.text = category
+        categoryLabel.textColor = UIColor.black
     }
 
     // MARK: - Date Time Delegate
@@ -130,7 +140,7 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
-            return 2
+            return 3
         }
         else if section == 1 {
             return 1
@@ -237,6 +247,12 @@ class CreateEventTableViewController: UITableViewController, UITextFieldDelegate
                     dest.locationManager = locationManager
                     dest.delegate = self
                 }
+            }
+        }
+        
+        if segue.identifier == "chooseCategory" {
+            if let dest = segue.destination as? CategoryPickerViewController {
+                dest.delegate = self
             }
         }
     }

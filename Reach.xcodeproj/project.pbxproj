@@ -17,12 +17,13 @@
 		D5657D501EC2BB3400B4160E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D4F1EC2BB3400B4160E /* Event.swift */; };
 		D5657D521EC2BC2000B4160E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5657D511EC2BC1F00B4160E /* User.swift */; };
 		D58964FE1EBC053F0023BE27 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58964FD1EBC053F0023BE27 /* MapKit.framework */; };
-		D58965001EBC12C00023BE27 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58964FF1EBC12C00023BE27 /* FilterViewController.swift */; };
 		D5A85E501EB96CAB003ACE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A85E4F1EB96CAB003ACE7C /* AppDelegate.swift */; };
 		D5A85E551EB96CAB003ACE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5A85E531EB96CAB003ACE7C /* Main.storyboard */; };
 		D5A85E571EB96CAB003ACE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5A85E561EB96CAB003ACE7C /* Assets.xcassets */; };
 		D5A85E5A1EB96CAB003ACE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5A85E581EB96CAB003ACE7C /* LaunchScreen.storyboard */; };
 		D5AF516B1EBC02C800B11D54 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AF516A1EBC02C800B11D54 /* MapViewController.swift */; };
+		D5D1A5771ECD1689005F6A6E /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1A5761ECD1689005F6A6E /* CategoryPickerViewController.swift */; };
+		D5D1A5791ECD290E005F6A6E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1A5781ECD290E005F6A6E /* FilterViewController.swift */; };
 		D5F2675A1ECBCFBE004A5302 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5F267591ECBCFBE004A5302 /* GoogleService-Info.plist */; };
 		D5F2675C1ECC1524004A5302 /* ViewEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F2675B1ECC1524004A5302 /* ViewEventTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -38,7 +39,6 @@
 		D5657D4F1EC2BB3400B4160E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D5657D511EC2BC1F00B4160E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D58964FD1EBC053F0023BE27 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		D58964FF1EBC12C00023BE27 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		D5A85E4C1EB96CAB003ACE7C /* Reach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A85E4F1EB96CAB003ACE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5A85E541EB96CAB003ACE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,6 +46,8 @@
 		D5A85E591EB96CAB003ACE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5A85E5B1EB96CAB003ACE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5AF516A1EBC02C800B11D54 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D5D1A5761ECD1689005F6A6E /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
+		D5D1A5781ECD290E005F6A6E /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		D5F267591ECBCFBE004A5302 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D5F2675B1ECC1524004A5302 /* ViewEventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewEventTableViewController.swift; sourceTree = "<group>"; };
 		D5F2675D1ECC2DB5004A5302 /* SanLuisObispo.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SanLuisObispo.gpx; sourceTree = "<group>"; };
@@ -107,12 +109,13 @@
 			children = (
 				D5A85E4F1EB96CAB003ACE7C /* AppDelegate.swift */,
 				D5A85E531EB96CAB003ACE7C /* Main.storyboard */,
+				D5D1A5761ECD1689005F6A6E /* CategoryPickerViewController.swift */,
 				D5657D471EC2479A00B4160E /* CreateEventTableViewController.swift */,
 				D5657D491EC281EB00B4160E /* DateTimeViewController.swift */,
 				D554E54A1EC52253001F29E4 /* EnterLocationViewController.swift */,
 				D5657D4F1EC2BB3400B4160E /* Event.swift */,
 				D5657D4B1EC2886400B4160E /* FeedViewController.swift */,
-				D58964FF1EBC12C00023BE27 /* FilterViewController.swift */,
+				D5D1A5781ECD290E005F6A6E /* FilterViewController.swift */,
 				D554E54C1EC535EA001F29E4 /* LocationSearchTableViewController.swift */,
 				D5AF516A1EBC02C800B11D54 /* MapViewController.swift */,
 				D5657D4D1EC2898900B4160E /* SwiftyJSON.swift */,
@@ -259,11 +262,12 @@
 			files = (
 				D5657D501EC2BB3400B4160E /* Event.swift in Sources */,
 				D5F2675C1ECC1524004A5302 /* ViewEventTableViewController.swift in Sources */,
+				D5D1A5771ECD1689005F6A6E /* CategoryPickerViewController.swift in Sources */,
 				D5657D481EC2479A00B4160E /* CreateEventTableViewController.swift in Sources */,
-				D58965001EBC12C00023BE27 /* FilterViewController.swift in Sources */,
 				D5A85E501EB96CAB003ACE7C /* AppDelegate.swift in Sources */,
 				D5657D4A1EC281EB00B4160E /* DateTimeViewController.swift in Sources */,
 				D5657D521EC2BC2000B4160E /* User.swift in Sources */,
+				D5D1A5791ECD290E005F6A6E /* FilterViewController.swift in Sources */,
 				D5657D4C1EC2886400B4160E /* FeedViewController.swift in Sources */,
 				D5657D4E1EC2898900B4160E /* SwiftyJSON.swift in Sources */,
 				D554E54D1EC535EA001F29E4 /* LocationSearchTableViewController.swift in Sources */,

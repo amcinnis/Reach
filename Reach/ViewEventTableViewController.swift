@@ -10,6 +10,7 @@ import UIKit
 
 class ViewEventTableViewController: UITableViewController {
 
+    @IBOutlet var categoryLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var endLabel: UILabel!
     var event: Event?
@@ -33,6 +34,7 @@ class ViewEventTableViewController: UITableViewController {
                 locationNameLabel.text = location.name
                 locationLabel.text = location.place
             }
+            categoryLabel.text = event.category
             
             let dateFormat = DateFormatter()
             dateFormat.dateStyle = .short
@@ -60,7 +62,7 @@ class ViewEventTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         switch section {
         case 0:
-            return 2
+            return 3
         case 1:
             return 2
         case 2:

@@ -10,12 +10,14 @@ import Firebase
 import MapKit
 import UIKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, ReachCategoryFilterDelegate {
 
-    let locationManager = CLLocationManager()
     var events = [Event]()
-    var selectedEvent: Event?
+    private var filters: [String]?
+    let locationManager = CLLocationManager()
     @IBOutlet var mapView: MKMapView!
+    var selectedEvent: Event?
+    private var userLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 let location = Location(name: locationName, place: place, latitude: lat, longitude: long)
                 let event = Event(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
                 event.location = location
+                event.category = firEvent["category"] as? String
                 event.id = snapshot.key
 
                 event.name = firEvent["name"] as? String
@@ -79,21 +82,46 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         })
     }
     
+    @IBAction func centerMapToUserLocation(_ sender: Any) {
+        if let userLocation = userLocation {
+            updateMap(location: userLocation)
+        }
+    }
+    
     private func updateMap(location: CLLocation) {
         let span = MKCoordinateSpanMake(0.015, 0.015)
         let region = MKCoordinateRegion(center: location.coordinate, span: span)
         mapView.setRegion(region, animated: false)
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Reach Category Filter Delegate
+    
+    func selectedCategoryFilters(filters: [String]) {
+        for annotation in mapView.annotations {
+            if let event = annotation as? Event {
+                let annotationView = mapView.view(for: annotation)
+                if filters.isEmpty || filters.contains(event.category!) {
+                    annotationView?.isHidden = false
+                }
+                else {
+                    annotationView?.isHidden = true
+                }
+            }
+        }
+        self.filters = filters
+    }
+    
     // MARK: - Core Location Delegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let userLocation = locations.first {
+            self.userLocation = userLocation
             updateMap(location: userLocation)
         }
     }
@@ -116,6 +144,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             if let dest = segue.destination as? ViewEventTableViewController {
                 if let selectedEvent = selectedEvent {
                     dest.event = selectedEvent
+                }
+            }
+        }
+        
+        if segue.identifier == "showFilter" {
+            if let dest = segue.destination as? FilterViewController {
+                dest.delegate = self
+                if let filters = self.filters {
+                    dest.filters = filters
                 }
             }
         }
